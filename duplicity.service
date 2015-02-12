@@ -1,0 +1,24 @@
+[Unit]
+Description=Duplicity Backup
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+Restart=on-failure
+RestartSec=5
+
+ExecStartPre=-/usr/bin/docker rm -f %p
+ExecStart=/usr/bin/docker run --rm -t \
+  --name %p \
+  -v /my/critical/data:/data:ro \
+  -e AWS_ACCESS_KEY_ID=<your_s3_access_key> \
+  -e AWS_SECRET_ACCESS_KEY=<your_s3_secret> \
+  mattbailey/docker-duplicity \
+    --name my_backup \
+    --full-if-older-than 30D \
+    --no-encryption \
+    --s3-use-new-style \
+    --s3-use-multiprocessing \
+    /data s3+http://yourbucket/backup
