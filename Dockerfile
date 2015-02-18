@@ -20,9 +20,11 @@ RUN pip install --upgrade --requirement /duplicity/requirements.txt
 # Get duplicity
 ADD https://code.launchpad.net/duplicity/0.7-series/0.7.01/+download/duplicity-0.7.01.tar.gz /tmp/duplicity.tgz
 
-# Extract & Build
-RUN tar -xzf /tmp/duplicity.tgz --strip-components 1 && ./setup.py install
+# Extract
+RUN tar -xzf /tmp/duplicity.tgz --strip-components 1
+
+# Add build script
+ADD start.sh /start.sh
 
 # Runtime to perform backup
-ENTRYPOINT [ "/usr/local/bin/duplicity"]
-CMD [ "--full-if-older-than", "1M", "/data", "dpbx:///Duplicity"]
+CMD [ "/bin/bash" , "/start.sh"]
