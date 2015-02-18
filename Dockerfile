@@ -23,5 +23,5 @@ ADD https://code.launchpad.net/duplicity/0.7-series/0.7.01/+download/duplicity-0
 # Extract & Build
 RUN tar -xzf /tmp/duplicity.tgz --strip-components 1 && ./setup.py install
 
-# Set the ENTRYPOINT
-ENTRYPOINT [ "/usr/local/bin/duplicity" ]
+# Runtime to perform backup
+CMD [ "/usr/local/bin/duplicity" , "--full-if-older-than 1M", "/data", "dpbx:///Duplicity"]
