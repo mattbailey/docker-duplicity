@@ -18,13 +18,11 @@ RUN apt-get -y install librsync-dev
 RUN pip install --upgrade --requirement /duplicity/requirements.txt
 
 # Get duplicity
-ADD https://code.launchpad.net/duplicity/0.7-series/0.7.01/+download/duplicity-0.7.01.tar.gz /tmp/duplicity.tgz
+ADD https://code.launchpad.net/duplicity/0.6-series/0.6.25/+download/duplicity-0.6.25.tar.gz /tmp/duplicity.tgz
 
 # Extract
-RUN tar -xzf /tmp/duplicity.tgz --strip-components 1
-
-# Add build script
-ADD start.sh /start.sh
+RUN tar -xzf /tmp/duplicity.tgz --strip-components 1 && ./setup.py install
 
 # Runtime to perform backup
-CMD [ "/bin/bash" , "/start.sh"]
+ENTRYPOINT ["/usr/local/bin/duplicity"]
+CMD ["--full-if-older-than", "1M", "/data", "dpbx:///Apps/Duplicity"]
