@@ -10,4 +10,4 @@ sed -i -e "s/YOUR_APP_SECRET/${APP_SECRET}/" duplicity/backends/dpbxbackend.py
 
 ./setup.py install
 
-/usr/local/bin/duplicity --full-if-older-than ${MAX_AGE} /data dpbx:///Duplicity ${APP_NAME}
+/usr/local/bin/duplicity --full-if-older-than ${MAX_AGE} /data dpbx:///${APP_NAME}
