@@ -25,4 +25,4 @@ RUN tar -xzf /tmp/duplicity.tgz --strip-components 1 && ./setup.py install
 
 # Runtime to perform backup
 ENTRYPOINT ["/usr/local/bin/duplicity"]
-CMD ["--full-if-older-than", "1M", "/data", "dpbx:///Apps/duplicity"]
+CMD ["--full-if-older-than", "1M", "/data", "dpbx:///duplicity"]
